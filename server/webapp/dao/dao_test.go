@@ -4,6 +4,9 @@ import (
 	"fmt"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 	. "gopkg.in/check.v1"
+	daoImpl "server/webapp/dao/impl"
+	. "server/webapp/dao/interfaces"
+	"server/webapp/global/injector"
 	"server/webapp/model"
 	"testing"
 )
@@ -13,23 +16,14 @@ var _ = Suite(&TestSuite{})
 func Test(t *testing.T) { TestingT(t) }
 
 type TestSuite struct {
-	Name string "inject"
+	AccountDao IAccountDao `inject:"t"`
 }
 
 // SetUpSuite 框架方法(测试用例执行之前调用)
 func (s *TestSuite) SetUpSuite(c *C) {
-	tables := []interface{}{&model.CfgDailySignIn{},
-		&model.CfgRoom{},
-		&model.CfgShop{},
-		&model.LogChips{},
-		&model.LogDiamond{},
-		&model.LogShop{},
-		&model.Notice{},
-		&model.UserStatistics{},
-		&model.UserInfoDetail{},
+	tables := []interface{}{
 		&model.Account{},
-		&model.Session{},
-		&model.UserFriend{}}
+		&model.Session{}}
 	Init(&Config{
 		DB:       "postgres",
 		Host:     "localhost",
@@ -48,11 +42,14 @@ func (s *TestSuite) SetUpSuite(c *C) {
 			},
 		},
 	}, tables...)
-	err := Connect()
+	db, err := Connect()
 	if err != nil {
 		panic(fmt.Sprintf("err:%s\n", err.Error()))
 	}
-	_db.LogMode(true)
+	db.LogMode(true)
+	injector.Map(db)
+	injector.SetFactory(daoImpl.NewFactory)
+	injector.Apply(s)
 }
 
 // TearDownSuite 框架方法(所有测试用例执行之后调用)

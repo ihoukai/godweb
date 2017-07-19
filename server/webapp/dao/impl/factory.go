@@ -28,13 +28,6 @@ func (f *Factory) NewAccountDao() interfaces.IAccountDao {
 	}
 }
 
-// NewCfgShopDao 数据访问对象
-func (f *Factory) NewCfgShopDao() interfaces.ICfgShopDao {
-	return &cfgShopDao{
-		baseDao: f.baseDao,
-	}
-}
-
 // NewSessionDao 数据访问对象
 func (f *Factory) NewSessionDao() interfaces.ISessionDao {
 	return &sessionDao{

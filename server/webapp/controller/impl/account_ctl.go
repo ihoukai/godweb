@@ -3,7 +3,6 @@ package impl
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
-	//"net/http"
 	"server/webapp/global/errors"
 	"server/webapp/global/injector"
 	"server/webapp/service/interfaces"

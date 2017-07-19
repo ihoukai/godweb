@@ -1,9 +1,9 @@
 package injector
 
 import (
-	"fmt"
 	"github.com/codegangsta/inject"
 	"reflect"
+	"server/webapp/global/log"
 )
 
 var injector = inject.New()
@@ -19,7 +19,7 @@ func SetFactory(ifactory interface{}) {
 	//遍历方法
 	for i := 0; i < typ.NumMethod(); i++ {
 		method := typ.Method(i)
-		fmt.Printf("method => %s\n", method.Name)
+		log.Info("method => %s", method.Name)
 		fn := reflect.ValueOf(factory).MethodByName(method.Name)
 		if method.Type.NumIn() != 1 {
 			continue
@@ -27,8 +27,8 @@ func SetFactory(ifactory interface{}) {
 
 		ret := fn.Call(nil)
 		// 注入inject字段
-		injector.Apply(ret[0].Interface())
-		injector.Set(ret[0].Type(), ret[0])
+		Apply(ret[0].Interface())
+		Set(ret[0].Type(), ret[0])
 	}
 }
 
@@ -56,7 +56,7 @@ func Map(val interface{}) {
 	if vt.Kind() == reflect.Interface {
 		vt = vt.Elem()
 	}
-	fmt.Printf("inject => %s %s\n", reflect.TypeOf(val).String(), vt.String())
+	log.Info("inject => %s %s", reflect.TypeOf(val).String(), vt.String())
 	injector.Map(val)
 }
 
@@ -71,7 +71,7 @@ func MapTo(val interface{}, ifacePtr interface{}) {
 	if vt.Kind() == reflect.Interface {
 		vt = vt.Elem()
 	}
-	fmt.Printf("inject => %s %s\n", reflect.TypeOf(ifacePtr).String(), vt.String())
+	log.Info("inject => %s %s", reflect.TypeOf(ifacePtr).String(), vt.String())
 	injector.MapTo(val, ifacePtr)
 }
 
@@ -86,7 +86,7 @@ func Set(typ reflect.Type, value reflect.Value) {
 	if vt.Kind() == reflect.Interface {
 		vt = vt.Elem()
 	}
-	fmt.Printf("inject => %s %s\n", typ.String(), vt.String())
+	log.Info("inject => %s %s", typ.String(), vt.String())
 	injector.Set(typ, value)
 }
 

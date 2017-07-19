@@ -1,7 +1,6 @@
 package impl
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"server/webapp/global/errors"
 	"server/webapp/global/injector"
@@ -18,7 +17,6 @@ func getAccount() *accountCtl {
 	if account == nil {
 		account = &accountCtl{}
 		injector.Apply(account)
-		fmt.Printf("=>%q\n", account)
 	}
 	return account
 }

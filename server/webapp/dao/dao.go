@@ -61,7 +61,6 @@ func Connect() (db *gorm.DB, err error) {
 	if err == nil {
 		initTables()
 		initIDZone(_db)
-		//initFactory(_db)
 		db = _db
 	}
 	return

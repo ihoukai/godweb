@@ -10,7 +10,7 @@ import (
 	"server/webapp/dao"
 	daoImpl "server/webapp/dao/impl"
 	"server/webapp/global/injector"
-	"server/webapp/log"
+	"server/webapp/global/log"
 	"server/webapp/model"
 	srvImpl "server/webapp/service/impl"
 	"time"

@@ -1,0 +1,41 @@
+package: .
+
+excludeDirs:
+- server
+
+import:
+
+# Postgre数据库lib
+- package: github.com/lib/pq                               
+- package: github.com/lib/pq/hstore              
+
+# uuid生成策略
+- package: github.com/satori/go.uuid     
+
+# 测试框架                  
+- package: gopkg.in/check.v1               
+
+# 依赖注入框架
+- package: github.com/codegangsta/inject
+
+# 日志模块                
+- package: github.com/go-ozzo/ozzo-log                     
+
+ # 数据库orm框架
+- package: github.com/jinzhu/gorm                         
+  version: v1.0
+- package: github.com/jinzhu/inflection
+
+ # 根据struct动态选择生成相应的map
+- package: github.com/tuvistavie/structomap               
+- package: github.com/fatih/structs
+- package: github.com/huandu/xstrings
+
+
+# gin及相关依赖包(web框架)
+- package: github.com/gin-gonic/gin                        
+- package: github.com/gin-contrib/sse                      
+- package: github.com/golang/protobuf/proto
+- package: github.com/mattn/go-isatty                      
+- package: gopkg.in/go-playground/validator.v8
+- package: github.com/json-iterator/go
